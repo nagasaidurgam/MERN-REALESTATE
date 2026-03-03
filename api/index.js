@@ -27,6 +27,14 @@ app.listen(3000, ()=> {
 
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);// we are using the userRouter and authRouter as middlewares for the urls /api/user and /api/auth respectively. 
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    return res.status(statusCode).json({
+        success: false,
+        statusCode,
+        message, });
+})
 
 
 
